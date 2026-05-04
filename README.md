@@ -30,9 +30,9 @@ This proposed algorithm performance is measured primarily via its drawdown graph
         ├── Minimum_Variance_2017_to_2019.ipynb
         └── Minimum_Variance_2018_to_2020.ipynb
     └── final/
-        ├── Minimum_Variance_2015_to_2020.ipynb
-        ├── Minimum_Variance_2017_to_2019.ipynb
-        └── Minimum_Variance_2018_to_2020.ipynb
+        ├── CVar_Minimizing_2015_to_2020.ipynb
+        ├── CVar_Minimizing_2017_to_2019.ipynb
+        └── CVar_Minimizing_2018_to_2020.ipynb
 ├── README.md
 └── Template.ipynb
 ```
