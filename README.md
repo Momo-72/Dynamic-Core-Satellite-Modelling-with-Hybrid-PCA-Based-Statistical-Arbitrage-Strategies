@@ -58,14 +58,60 @@ Financial returns are heavy‑tailed, meaning that extreme events occur more fre
 These robust estimators ensure that the baseline portfolio is not distorted by extreme values.
 
 ### PCA Residuals and StatArb Overlay
-PCA decomposes returns into systematic factors and idiosyncratic residuals. By reconstructing ~80% of the variance, residuals represent deviations unexplained by common market factors. These residuals are smoothed with a Kalman filter, standardized into s‑scores using median and MAD, and filtered through ADF stationarity tests. Contrarian trading rules are then applied:
+PCA decomposes asset returns into systematic factors and idiosyncratic residuals. By reconstructing ~80% of the variance, the residuals represent deviations unexplained by common market factors.  These residuals are then processed through a robust signal pipeline:
+1. **Kalman Filter Smoothing**  
+   - Reduces noise and extracts latent states.  
+   - Produces more stable signals compared to raw residuals.
 
-- Entry: Short if s > +2, long if s < −2.
-- Exit: Close positions when |s| < 0.5.
+2. **Robust Standardization (Median & MAD)**  
+   - Converts residuals into s‑scores.  
+   - Resistant to outliers and heavy‑tailed distributions.
 
-Risk controls enforce stop‑loss thresholds and maximum holding horizons.
+3. **Stationarity Testing (ADF)**  
+   - Ensures signals are based on mean‑reverting processes.  
+   - Filters out spurious trends.
+
+4. **Contrarian Trading Rules**  
+   - Go long when residuals are unusually low.  
+   - Go short when residuals are unusually high.  
+   - Exit when residuals revert toward the median.
+  
+5. **Risk controls**
+    - Enforce stop‑loss thresholds and maximum holding horizons.
+
+This approach systematically extracts alpha from residual risk by:
+- Stripping away common market noise.  
+- Focusing only on idiosyncratic, mean‑reverting opportunities.  
+- Applying robust statistical safeguards to avoid false signals.  
+- Exploiting temporary mispricings through disciplined contrarian trades.
+
+PCA residual decomposition provides a risk‑controlled, data‑driven way to isolate and trade hidden market inefficiencies.
 
 ### Core-Satellite
+The core–satellite model is a portfolio construction approach that combines:
+- **Core portfolio**: A stable, diversified allocation (often market index or risk‑controlled baseline) designed to capture broad market returns with low turnover.
+- **Satellite portfolio**: Smaller, more active positions aimed at generating excess returns (alpha) through tactical strategies, factor tilts, or alternative signals.
+
+The theoretical advantage is that the core provides long‑term stability and market exposure, while the satellite allows for flexible, opportunistic trading without impact the overall risk profile. This balance improves risk‑adjusted performance by separating systematic exposure from active bets. The PCA residual decomposition is particularly suited to the satellite component because:
+1. **Separation of Market Factors**  
+   - PCA reconstructs ~80% of return variance as common market factors.  
+   - Residuals represent idiosyncratic deviations, ideal for satellite trading since they are independent of broad market risk.
+
+2. **Noise Reduction and Robustness**  
+   - Kalman smoothing stabilizes residual signals.  
+   - Median/MAD standardization ensures robustness against outliers.  
+   - ADF stationarity tests filter out non‑mean‑reverting series.
+
+3. **Contrarian Trading Logic**  
+   - Residuals capture temporary mispricings relative to market factors.  
+   - Contrarian rules exploit mean reversion, generating short‑term alpha opportunities.
+
+With the application of a core-satellite framework into the proposed algorithm:
+- The core portfolio ensures market‑like performance and stability.  
+- The satellite portfolio, powered by PCA residual signals, selectively adds alpha from idiosyncratic opportunities.  
+This creates a **risk‑managed market proxy**: equity‑like returns with lower drawdowns, improved Sharpe ratios, and disciplined exposure to hidden inefficiencies.
+
+The PCA residuals provide a data‑driven, statistically robust way to fuel the satellite component, while the core guarantees long‑term stability. This synergy makes the core–satellite model an ideal framework for balancing systematic exposure with opportunistic trading.
 
 ## Algorithm Design 
 ### Key Contributions
@@ -74,7 +120,7 @@ Risk controls enforce stop‑loss thresholds and maximum holding horizons.
 - **Hybrid Portfolio**: Stable baseline allocation blended with PCA‑based arbitrage overlay.  
 - **Risk Controls**: Stop‑loss and maximum holding horizon integrated for realistic drawdown management.  
 - **Kalman Smoothing**: Residuals filtered to reduce noise and improve signal consistency.
-- **Core-Satellite**:
+- **Core-Satellite**: Enables the consideration of both a baseline portfolio, and StatArb for a hybrid portfolio which provides diversification, and exploits opportunities in the market.
 
 ### Original Research Ideas Contributed in this Project
 This project is designed to extend classical theory with robust statistics, time-series filtering and statistical validation, and then applies a blended allocation framework that unifies diversification and arbitrage. By doing this, the aim is to introduce original research in robust statistical arbitrage and portfolio design. Specifically, the following novel approaches are implemented in this approach:
