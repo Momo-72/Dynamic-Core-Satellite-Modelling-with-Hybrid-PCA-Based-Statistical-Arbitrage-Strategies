@@ -4,7 +4,7 @@ Note: This repository is currently still a work in progress, thank you!
 > All code and information provided in this repository is for experimentation purposes only and should not be taken as financial advice. Do not use this algorithm for your personal financial interests under any circumstances, I highly highly highly advice against it. I am a random person from a non-financial background on the Internet.
 
 ## Abstract
-This project proposes an algorithm strategy inspired by the Core-Satellite model, and is modelled to produce a risk-managed market proxy. It utilizes a core, basic portfolio, such as 1/N or inverse-volatility, for diversification and consistency, while leverging statistical arbitrage for riskier investments, in order to profit from potential opportunitism. This algorithm is capable of modeling the true market accurately, where at some instances it may even exceed the market, and additionally improves sharpe ratios of basic portfolios by over 20% and reduces volatility by over 15%. These results are consistent across different baseline portfolio philosophies, and market conditions. This illustrates the proposed algorithm's potential to improve pre-existing baseline portfolios by introducing an adaptive overlay. 
+This project proposes an algorithm strategy inspired by the Core-Satellite model, and is modelled to produce a trading strategy overlay. It utilizes a core, basic portfolio, such as 1/N or inverse-volatility, for diversification and consistency, while leverging statistical arbitrage for riskier investments, in order to profit from potential opportunitism. This algorithm is capable of modeling the true market accurately, where at some instances it may even exceed the market, and additionally improves sharpe ratios of basic portfolios by over 20% and reduces volatility by over 15%. These results are consistent across different baseline portfolio philosophies, and market conditions. This illustrates the proposed algorithm's potential to improve pre-existing baseline portfolios by introducing an adaptive overlay. 
 
 ## Introduction
 Pairs trading is a relative‑value arbitrage strategy that exploits the mean‑reverting property of spreads between cointegrated assets. When two securities diverge from their historical equilibrium, the undervalued asset is bought and the overvalued asset is sold short, with the expectation that prices will converge. This contrarian philosophy is market‑neutral, profiting from relative mispricings rather than broad market trends.
@@ -54,7 +54,7 @@ Financial prices are typically modeled in log‑space because log‑returns are 
 Financial returns are heavy‑tailed, meaning that extreme events occur more frequently than under Gaussian assumptions. To address this:
 
 - Spatial median is used as a robust estimator of expected returns, less sensitive to outliers than the arithmetic mean. In baseline portfolios which utilize the mean, it replaces the arithmetic mean to handle heavy-tailed data.
-- MAD (Median Absolute Deviation) is used to estimate volatility and covariance, providing stability under fat‑tailed distributions. This ensures a robust risk estimation.
+- MAD (Median Absolute Deviation) is used to estimate volatility and covariance, providing stability under fat‑tailed distributions. This ensures a robust  estimation.
 
 These robust estimators ensure that the baseline portfolio is not distorted by extreme values.
 
@@ -110,7 +110,7 @@ The theoretical advantage is that the core provides long‑term stability and ma
 With the application of a core-satellite framework into the proposed algorithm:
 - The core portfolio ensures market‑like performance and stability.  
 - The satellite portfolio, powered by PCA residual signals, selectively adds alpha from idiosyncratic opportunities.  
-This creates a **risk‑managed market proxy**: equity‑like returns with lower drawdowns, improved Sharpe ratios, and disciplined exposure to hidden inefficiencies.
+This creates a **trading strategy overlay**: equity‑like returns with lower drawdowns, improved Sharpe ratios, and disciplined exposure to hidden inefficiencies.
 
 The PCA residuals provide a data‑driven, statistically robust way to fuel the satellite component, while the core guarantees long‑term stability. This synergy makes the core–satellite model an ideal framework for balancing systematic exposure with opportunistic trading.
 
@@ -268,7 +268,7 @@ Improvements were visible both pre-COVID (2017–2019) and during COVID (2018–
 TODO
 
 ## Conclusion
-This algorithm can be best understood as a risk-managed market proxy, as it delivers equity-like returns with some additional minor downside protection, and occasional short-term alpha.
+This algorithm can be understood as a risk‑managed trading overlay on an equity core, delivering equity‑like returns with some additional minor downside protection, and occasional short-term alpha.
 
 The novelty of the algorithm is presented in the integration of dimensionality reduction, state-space filtering, robust statistical measures, and adaptive portfolio blending within a unified framework. 
 
