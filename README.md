@@ -1,10 +1,10 @@
 Note: This repository is currently still a work in progress, thank you!
-# Dynamic-Core-Satellite-Modelling-with-Hybrid-PCA-Based-Statistical-Arbitrage-Strategies
+# Dynamic Core-Satellite Algorithm with Hybrid PCA-Based Statistical Arbitrage Strategies
 > [!WARNING] 
 > All code and information provided in this repository is for experimentation purposes only and should not be taken as financial advice. Do not use this algorithm for your personal financial interests under any circumstances, I highly highly highly advice against it. I am a random person from a non-financial background on the Internet.
 
 ## Abstract
-TODO
+This project proposes an algorithm strategy inspired by the Core-Satellite model. It utilizes a core, basic portfolio, such as 1/N or inverse-volatility, for diversification and consistency, while leverging statistical arbitrage for riskier investments, in order to profit from potential opportunitism. This algorithm is capable of modeling the true market accurately, where at some instances it may even exceed the market, and additionally improves sharpe ratios of basic portfolios by over 20% and reduces volatility by over 15%. These results are consistent across different baseline portfolio philosophies, and market conditions. This illustrates the proposed algorithm's potential to improve pre-existing baseline portfolios by introducing an adaptive overlay. 
 
 ## Introduction
 Pairs trading is a relative‑value arbitrage strategy that exploits the mean‑reverting property of spreads between cointegrated assets. When two securities diverge from their historical equilibrium, the undervalued asset is bought and the overvalued asset is sold short, with the expectation that prices will converge. This contrarian philosophy is market‑neutral, profiting from relative mispricings rather than broad market trends.
