@@ -287,9 +287,7 @@ These limitations and risks include, but are not limited to:
 - **Kalman Fallback**: If filtering fails, raw residuals are used, reducing consistency.  
 - **Stop-Loss Design**: Resetting PnL after exit may underestimate long-term drawdowns.  
 - **Position Sizing**: Normalization ignores correlation and volatility scaling.  
-- **Blended Allocation**: Default 85/15 split is arbitrary and not optimized.  
 - **Transaction Costs & Slippage**: Not modeled; frequent rebalancing could erode profits.  
-- **Overfitting Risk**: PCA component selection and multiple filters risk data snooping bias.  
 
 ### Suggested Improvements
 For futher development of the algorithmn, the following improvements can be implemented:
@@ -298,5 +296,5 @@ For futher development of the algorithmn, the following improvements can be impl
 - **Enhanced Error Handling**: Improve Kalman filter robustness to avoid fallback inconsistencies.  
 - **Drawdown Tracking**: Monitor global portfolio drawdown separately from per-trade PnL.  
 - **Correlation-Aware Position Sizing**: Incorporate risk parity or covariance-based scaling.  
-- **Transaction Cost Modeling**: Explicitly account for fees, slippage, and liquidity constraints.  
-- **Out-of-Sample Validation**: Use walk-forward testing to mitigate overfitting and data snooping.
+- **Transaction Cost Modeling**: Explicitly account for fees, slippage, and liquidity constraints.
+- **Improvement of Hyperparameters**: By introducing both an in-sample and out-of-sample dataset, hyperparameters can be optimized to improve results.
