@@ -1,9 +1,10 @@
+Note: This repository is currently still a work in progress, thank you!
 # Dynamic-Core-Satellite-Modelling-with-Hybrid-PCA-Based-Statistical-Arbitrage-Strategies
-# Extending Portfolios with Hybrid PCA-Based S-Score Statistical Arbitrage Strategies
 > [!WARNING] 
 > All code and information provided in this repository is for experimentation purposes only and should not be taken as financial advice. Do not use this algorithm for your personal financial interests under any circumstances, I highly highly highly advice against it. I am a random person from a non-financial background on the Internet.
 
 ## Abstract
+TODO
 
 ## Introduction
 Pairs trading is a relative‑value arbitrage strategy that exploits the mean‑reverting property of spreads between cointegrated assets. When two securities diverge from their historical equilibrium, the undervalued asset is bought and the overvalued asset is sold short, with the expectation that prices will converge. This contrarian philosophy is market‑neutral, profiting from relative mispricings rather than broad market trends.
@@ -262,6 +263,9 @@ Improvements were visible both pre-COVID (2017–2019) and during COVID (2018–
     - The results of the CVar-Minimizing portfolio were far below the other baseline algorithms, as even alone the porfolio did not perform strongly on the provided data. However, even given its poor baseline performance, the provided strategy was able to improve its results rather significantly. This suggests that the proposed strategy can improve even poor performing baseline portfolios.
 8. Strong performance results without hyperparameter fine-tuning
     - Despite not optimizing hyperparameters, such as window_size, the strategy was able to provide significant gains to each of the baseline portfolios in all scenarios. This illustrates the potential of the strategy to perform well, as it is not overfitting the data and showcases authentic results. This additionally suggests that by enhancing the hyperparameters, further gains to performance can be made.
+
+**Baseline Portfolio Comparisons**
+TODO
 
 ## Conclusion
 This algorithm can be best understood as a risk-managed market proxy, as it delivers equity-like returns with some additional minor downside protection, and occasional short-term alpha.
