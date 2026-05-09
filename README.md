@@ -1,4 +1,3 @@
-Note: This repository is currently still a work in progress, thank you!
 # Dynamic Core-Satellite Algorithm with Hybrid PCA-Based Statistical Arbitrage Strategies
 > [!WARNING] 
 > All code and information provided in this repository is for experimentation purposes only and should not be taken as financial advice. Do not use this algorithm for your personal financial interests under any circumstances, I highly highly highly advice against it. I am a random person from a non-financial background on the Internet.
@@ -11,9 +10,9 @@ Pairs trading is a relative‑value arbitrage strategy that exploits the mean‑
 
 The extension of pairs trading to multiple assets is referred to as statistical arbitrage (StatArb). This involves utilizing linear combinations of assets to construct and form mean‑reverting spreads. This project uses a PCA-based approach to isolate common factors and extract idiosyncratic residuals, which can serve as candidates for mean‑reversion trades. However, raw residuals are noisy, requiring smoothing and robust standardization before trading signals can be derived. Therefore, the extracted residuals are smoothed using the Kalman filter, and standardized into s-scores, and filtered through ADF stationary tests. Proceeding this processing, Contrarian entry/exit rules are applied when deviations exceed thresholds (e.g., ±2 for entry, ±0.5 for exit).  Furthermore, risk management is additionally introduced in this implementation through stop‑loss limits, maximum holding horizons, and safe initialization of positions.
 
-By using the above process, a hybrid portfolio algorithm is introduced, combining an existing baseline allocation scheme with PCA-based StatArb overlays. The baseline ensures diversification, and utilizes heavy-tailed distribution estimators to coincide with the nature of financial data. Then, this portfolio is combined with the previously mentioned algorithm via an overlay to exploit short-term mean-reversion signals.
+By using the above process, a hybrid portfolio algorithm is introduced, combining an existing baseline allocation scheme with PCA-based StatArb overlays in a dynamic-core satellite inspired framework. It builds upon pre-existing portfolios, and integrates it as its core. This baseline portfolio ensures diversification, and utilizes heavy-tailed distribution estimators to coincide with the nature of financial data. Then, this baseline portfolio is combined with the previously mentioned algorithm by introducing it as a sattelite overlay. This sattelite overlay is designed to introduce a statistical arbitrage overlay to exploit short-term mean-reversion signals. The goal of this project is to produce a framework which is capable of leveraging the diversification capabilities of a pre-existing baseline portfolio alongside exploiting short-term opportunities with the statistical arbitrage satellite. 
 
-This proposed algorithm performance is measured primarily via its drawdown graph, in order to prioritize the minimization of losses as its primary performance metric. Additionally, the algorithm does track daily and cumulative returns to compare it to the performance of the real-market.
+The proposed algorithm performance is measured primarily via cumulative returns, drawdown, volatility and sharpe ratio. This is then compared to both the true market, and the baseline portfolios on their own.
 
 ## Repository Structure
 ```
@@ -131,10 +130,13 @@ This project is designed to extend classical theory with robust statistics, time
 4. **Robust S‑Score Standardization:** Usually z-scores are employed in statistical arbitrage, however, this algorithm uses the median and MAD to standardize residuals into s-scores. This ensures that the signal thresholds for entry and exit are more reliable under heavy-tailed distributions. This contributes to research by offering a robust alternative to conventional z-score trading rules, tailored for heavy-tailed data.
 5. **Stationarity as a Trading Filter:** ADF stationarity tests are enforced before trading residuals, which ensures that pair trading strategies ignore stationarity which can lead to spurious trades on random walks and noise. This contributes to research as its a formal integration of stationarity testing into the traditional trading pipeline, ensuring statistical validity of mean-reversion signals.
 6. **Blended Allocation Framework:** This algorithm combines a baseline portfolio designed to prioritize diversification (such as 1/N) with a stat-arb overlay, by modeling the integration of these two concepts as a core-satellite model. This provides a blended approach to portfolio design rather than considering these ideas as seperate, providing long-term robustness with short-term opportunism. This contributes to research by using a portfolio design philosophy that integrates divers with disciplined arbitrage in a single allocation scheme.
-7. **Bias‑Free Signal Timeline:** The provided code explicitly ensures bias-free timing, as signals estimated at t-1 are only applied at t to prevent lookahead bias, which is present in many backtests. This provides a methodological framework that can be replicated and audited for fairness in backtesting.
+7. **Dynamic Allocation:** The allocation between the core and satellite is approached dynamically, which enables it to adapt to different market conditions as it changes. 
+8. **Bias‑Free Signal Timeline:** The provided code explicitly ensures bias-free timing, as signals estimated at t-1 are only applied at t to prevent lookahead bias, which is present in many backtests. This provides a methodological framework that can be replicated and audited for fairness in backtesting.
 
 ## Algorithm and System Justification
 *Please see the file Template.ipynb for exact code implementation details and walkthrough of the code*
+
+The algorithm is implemented primarily in two main parts, that being the formation of the core and the satellite. The core is identified in step 1 which serves the foundation as the algorithm's stable and diversified allocation. This is where the base_weights are calculated. Then in steps 2-7, different mathematical formulas are applied to extract the statistical arbitrage, which serve as the algorithms satellite weights. These weights are then combined in a core-satellite inspired framework to produce the final algorithm.
 
 **Step 1: Baseline Portfolio Construction (e.g., 1/N, inverse volatility)**
 - Description: Use a portfolio designed primarily around the concept of diversification for best results. Base weights will be constructed from this baseline portfolio.
@@ -265,18 +267,16 @@ Improvements were visible both pre-COVID (2017–2019) and during COVID (2018–
     - Despite not optimizing hyperparameters, such as window_size, the strategy was able to provide significant gains to each of the baseline portfolios in all scenarios. This illustrates the potential of the strategy to perform well, as it is not overfitting the data and showcases authentic results. This additionally suggests that by enhancing the hyperparameters, further gains to performance can be made.
 
 **Baseline Portfolio Comparisons**
-TODO
+When comparing the algorithm to the baseline portfolios on their own without the satellite overlay, it is capable to improve both volatilities and sharpe ratios by over 20%. This is also demonstrated in outlier events such as COVID.
 
 ## Conclusion
-This algorithm can be understood as a risk‑managed trading overlay on an equity core, delivering equity‑like returns with some additional minor downside protection, and occasional short-term alpha.
+In conclusion, the proposed algorithm can be understood as a risk‑managed trading overlay on an equity core, delivering equity‑like returns with some additional minor downside protection, and occasional short-term alpha. The empircal evidence suggests that the algorithm is able to provide a risk-adjusted performance and resilience across any of the provided time periods, and enhancement across a range of existing allocation philosophies. It offers practical enhancement to stabilize the portfolio performance in existing allocation philosophies, and is best suited for those which prioritize diversification. This is illustrated by its ability to improve the sharpe ratio and volatility scores by over 20%. While long-term returns may underperform the market, which could be due to conservative risk constraints, the fact that it reduces drawdown and can exceed the market in shorter time periods indiate that tge presented algorithm may be suited for stable equity exposure where drawdown is heavily considered. 
 
-The novelty of the algorithm is presented in the integration of dimensionality reduction, state-space filtering, robust statistical measures, and adaptive portfolio blending within a unified framework. 
-
-The empirical evidence suggests that while long-term returns may underperform the market, which could be due to conservative risk constraints, it presents an improved risk-adjusted performance and resilience across regimes. This makes the presented algorithm best suited for stable equity exposure where drawdown is heavily considered. 
-
-This algorithm offers practical enhancement to stabilize the portfolio performance in existing allocation philosophies, and is best suited for those which prioritize diversification. This is illustrated by its ability to improve the sharpe ratio and volatility scores by over 20%. 
+The novelty of the algorithm is presented in the integration of dimensionality reduction, state-space filtering, robust statistical measures, and adaptive portfolio blending within a unified framework. Additionally, the core-sattelite framework is implemented dynamically, rather than statically as in most core-sattelite frameworks. This means that the proposed algorithm does not remain fixed like previous models, and rather can adapt to changing conditions, and adapt to outlier events such as COVID.
 
 Additionally, these market-aligned results were obtained without hyperparameter tuning, demonstrating that it didn’t perform well due to overfitting of data. Considering it performed well in a range of market scenarios, including outlier events such as COVID, without the fine-tuning of hyperparameters, this suggests that the algorithm has the potential to perform well on future data.
+
+However, it does introduce limitations which indicate areas of potential future work, which are discussed in detail below. Particularly as the baseline portfolios and statistical arbitrage can incur heavy transaction costs which are not modeled, which could suggest that the algorithm may not be capable of modeling the real-data effectively. This indicates areas of potential work, and suggest that this algorithm may be best suited for benchmarking tasks, or model forecasting/prediction tasks.
 
 ## Limitations & Risks
 Although the results indicate that the algorithm is capable of minimizing drawdown compared to the true market, there are existing limitations and risks in the developed algorithm. 
