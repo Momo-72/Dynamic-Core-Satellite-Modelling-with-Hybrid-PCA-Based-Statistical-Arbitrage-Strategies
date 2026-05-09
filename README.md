@@ -267,7 +267,8 @@ Improvements were visible both pre-COVID (2017–2019) and during COVID (2018–
 8. Strong performance results without hyperparameter fine-tuning
     - Despite not optimizing hyperparameters, such as window_size, the strategy was able to provide significant gains to each of the baseline portfolios in all scenarios. This illustrates the potential of the strategy to perform well, as it is not overfitting the data and showcases authentic results. This additionally suggests that by enhancing the hyperparameters, further gains to performance can be made.
 
-**Baseline Portfolio Comparisons**
+**Baseline Portfolio Comparisons**:
+
 When comparing the algorithm to the baseline portfolios on their own without the satellite overlay, it is capable to improve both volatilities and sharpe ratios by over 20%. This is also demonstrated in outlier events such as COVID.
 
 ## Conclusion
